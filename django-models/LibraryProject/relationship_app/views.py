@@ -4,7 +4,6 @@ from .models import Book
 from .models import Library
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
-from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import user_passes_test, permission_required
 
 def is_admin(user):
@@ -34,13 +33,6 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
-
-class UserLoginView(LoginView):
-    template_name = 'relationship_app/login.html'
-
-def user_logout(request):
-    logout(request)
-    return redirect('login')
 
 @user_passes_test(is_admin)
 def admin_view(request):
