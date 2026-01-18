@@ -4,7 +4,7 @@ from .models import Book, Library
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, permission_required
 
 def is_admin(user):
     return user.is_authenticated and user.userprofile.role == 'Admin'
@@ -52,3 +52,18 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
+
+@permission_required('relationship_app.can_add_book')
+def add_book(request):
+    # Your view logic for adding a book
+    return render(request, 'relationship_app/add_book.html')
+
+@permission_required('relationship_app.can_change_book')
+def change_book(request, book_id):
+    # Your view logic for changing a book
+    return render(request, 'relationship_app/change_book.html', {'book_id': book_id})
+
+@permission_required('relationship_app.can_delete_book')
+def delete_book(request, book_id):
+    # Your view logic for deleting a book
+    return render(request, 'relationship_app/delete_book.html', {'book_id': book_id})
