@@ -1,0 +1,10 @@
+<!-- bookshelf/templates/bookshelf/book_list.html -->
+<h1>Book List</h1>
+<a href="{% url 'book_create' %}">Add New Book</a>
+<ul>
+    {% for book in books %}
+        <li><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></li>
+    {% empty %}
+        <li>No books found.</li>
+    {% endfor %}
+</ul>
