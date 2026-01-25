@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from .models import Book
-from .forms import BookForm
+from .forms import ExampleForm
 
 # View to list all books. Requires 'can_view_book' permission.
 @permission_required('bookshelf.can_view_book', raise_exception=True)
@@ -19,12 +19,12 @@ def book_detail(request, pk):
 @permission_required('bookshelf.can_create_book', raise_exception=True)
 def book_create(request):
     if request.method == 'POST':
-        form = BookForm(request.POST)
+        form = ExampleForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('book_list')
     else:
-        form = BookForm()
+        form = ExampleForm()
     return render(request, 'bookshelf/book_form.html', {'form': form})
 
 # View to update an existing book. Requires 'can_edit_book' permission.
@@ -32,12 +32,12 @@ def book_create(request):
 def book_update(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        form = ExampleForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
             return redirect('book_list')
     else:
-        form = BookForm(instance=book)
+        form = ExampleForm(instance=book)
     return render(request, 'bookshelf/book_form.html', {'form': form})
 
 # View to delete an existing book. Requires 'can_delete_book' permission.
