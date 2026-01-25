@@ -6,6 +6,7 @@ class Book(models.Model):
     publication_year = models.IntegerField()
 
     class Meta:
+        # Define custom permissions for the Book model
         permissions = [
             ("can_view_book", "Can view book"),
             ("can_create_book", "Can create book"),
