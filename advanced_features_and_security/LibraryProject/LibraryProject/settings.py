@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bookshelf',
     'relationship_app',
-    'users',
     'csp', # Add django-csp app
 ]
 
@@ -67,16 +66,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CSP Directives
-CSP_DEFAULT_SRC = ("'self'",)
-CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'") # 'unsafe-inline' for development; refine for production
-CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")  # 'unsafe-inline' for development; refine for production
-CSP_IMG_SRC = ("'self'", "data:")
-CSP_FONT_SRC = ("'self'",)
-CSP_CONNECT_SRC = ("'self'",)
-CSP_OBJECT_SRC = ("'none'",)
-CSP_BASE_URI = ("'self'",)
-CSP_FRAME_ANCESTORS = ("'self'",)
+CONTENT_SECURITY_POLICY = {
+    'default-src': ("'self'",),
+    'script-src': ("'self'", "'unsafe-inline'"),
+    'style-src': ("'self'", "'unsafe-inline'"),
+    'img-src': ("'self'", "data:"),
+    'font-src': ("'self'",),
+    'connect-src': ("'self'",),
+    'object-src': ("'none'",),
+    'base-uri': ("'self'",),
+    'frame-ancestors': ("'self'",),
+}
 
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -146,4 +146,4 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
