@@ -44,6 +44,35 @@ This project implements a system for managing permissions and groups to control 
     - `book_update`: Protected by `bookshelf.can_edit_book`.
     - `book_delete`: Protected by `bookshelf.can_delete_book`.
 
+## 2. Implementing Security Best Practices in Django
+
+This project applies various security measures to enhance the protection of the Django application against common vulnerabilities.
+
+### Secure Settings Configuration (`settings.py`):
+- **`DEBUG = False`**: Ensures the application runs in a production-ready mode, preventing sensitive information disclosure.
+- **`ALLOWED_HOSTS`**: Explicitly lists trusted hosts for the application (e.g., `['localhost', '127.0.0.1']`).
+- **Browser Security Headers**:
+    - `SECURE_BROWSER_XSS_FILTER = True`: Enables the browser's XSS filtering.
+    - `SECURE_CONTENT_TYPE_NOSNIFF = True`: Prevents browsers from MIME-sniffing content.
+    - `X_FRAME_OPTIONS = 'DENY'` (also handled by middleware): Prevents clickjacking attacks by disallowing framing of the site.
+- **Secure Cookie Settings**:
+    - `CSRF_COOKIE_SECURE = True`: Ensures CSRF token cookies are only sent over HTTPS.
+    - `SESSION_COOKIE_SECURE = True`: Ensures session cookies are only sent over HTTPS.
+
+### CSRF Protection in Templates:
+- All forms within the project, including those in the `bookshelf` app (`book_form.html`) and `relationship_app` (`login.html`, `register.html`), explicitly include the `{% csrf_token %}` tag to protect against Cross-Site Request Forgery attacks.
+
+### Secure Data Access in Views:
+- **Django ORM**: Utilizes Django's Object-Relational Mapper for database interactions, which inherently parameterizes queries and prevents SQL injection vulnerabilities.
+- **Form Validation**: User inputs are validated and sanitized using Django forms (`BookForm`, `UserCreationForm`), ensuring data integrity and security.
+
+### Content Security Policy (CSP) Implementation:
+- **`django-csp`**: The `django-csp` library is integrated to set a Content Security Policy header.
+- **Configuration (`settings.py`)**:
+    - `csp` added to `INSTALLED_APPS`.
+    - `csp.middleware.CSPMiddleware` added to `MIDDLEWARE`.
+    - Basic CSP directives are defined (`CSP_DEFAULT_SRC`, `CSP_SCRIPT_SRC`, `CSP_STYLE_SRC`, etc.) to control resource loading and mitigate XSS risks. Note: `'unsafe-inline'` is used for development convenience and should be refined for production.
+
 ## Setup and Usage:
 
 1.  **Navigate to the project directory**:
@@ -58,7 +87,7 @@ This project implements a system for managing permissions and groups to control 
     ```
 3.  **Install dependencies**:
     ```bash
-    pip install Django==6.0.1 Pillow
+    pip install Django==6.0.1 Pillow django-csp
     ```
 4.  **Make and apply migrations**:
     ```bash
@@ -81,4 +110,7 @@ This project implements a system for managing permissions and groups to control 
     *   Navigate to "Authentication and Authorization" -> "Users".
     *   Create test users (e.g., `editor_user`, `viewer_user`, `admin_user`, `normal_user`) and assign them to the relevant groups.
 10. **Test Permissions**: Log in as different test users and verify that access to the book-related views (`/books/`, `/books/book/new/`, etc.) is correctly restricted based on their assigned permissions.
-
+11. **Test Security Features**:
+    *   Verify that `DEBUG` is `False` in `settings.py`.
+    *   Check HTTP headers in your browser's developer tools to confirm `X-Frame-Options`, `X-XSS-Protection`, `X-Content-Type-Options`, and `Content-Security-Policy` headers are present and correctly configured.
+    *   Ensure that forms require CSRF tokens.
