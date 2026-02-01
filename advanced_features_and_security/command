@@ -1,0 +1,36 @@
+ Start the Django Development Server:
+      Run the following command in your terminal:
+
+   1     advanced_features_and_security/venv/Scripts/python.exe advanced_features_and_security/LibraryProject/manage.py
+     runserver
+
+   2. Access the Django Admin Interface:
+      Open your web browser and go to http://127.0.0.1:8000/admin/.
+
+   3. Log in as Superuser:
+      Log in using the superuser credentials you just created:
+       * Username: tumisang
+       * Password: <the_password_you_entered>
+
+   4. Create Groups:
+       * In the Django admin, navigate to "Authentication and Authorization" -> "Groups" and click "Add group".
+       * Create the following groups, assigning the specified permissions:
+           * Editors:
+               * Assign permissions: bookshelf | book | Can create book, bookshelf | book | Can edit book, bookshelf |
+                 book | Can view book
+           * Viewers:
+               * Assign permissions: bookshelf | book | Can view book
+           * Admins:
+               * Assign permissions: All bookshelf | book permissions (Can view book, Can create book, Can edit book,
+                 Can delete book)
+
+
+
+
+Completed Step 3 of Task 1. Now for Step 4, testing permissions. Here are the
+  instructions: Create editor_user, viewer_user, admin_user, and normal_user in the
+  Django admin, assigning them to the Editors, Viewers, Admins groups and no group
+  respectively. Then, log in as each user and verify access to book-related URLs:
+  viewer_user should only view books, editor_user should be able to create and edit
+  but not delete, admin_user should have full access, and normal_user should have
+  none. Let me know when your testing is complete.                 
