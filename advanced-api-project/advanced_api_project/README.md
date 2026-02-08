@@ -16,3 +16,22 @@ This project uses the Django REST Framework's **generic views** to implement CRU
 ## Permissions
 - **ListView & DetailView** -> 'AllowAny' (unauthenticated users can read)
 - **CreateView, UpdateView, DeleteView** -> 'IsAuthenticated' (only logged-in users can modify data)
+
+---
+
+## Advanced Features
+
+### Filtering
+You can filter the books by `title`, `author`, and `publication_year`.
+
+Example: `GET /books/?publication_year=2024`
+
+### Searching
+You can search the books by `title` and `author`.
+
+Example: `GET /books/?search=Test`
+
+### Ordering
+You can order the books by `title` and `publication_year`.
+
+Example: `GET /books/?ordering=title`
