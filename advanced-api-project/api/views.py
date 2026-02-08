@@ -1,3 +1,4 @@
+from django_filters import rest_framework
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
 from rest_framework.filters import SearchFilter, OrderingFilter
