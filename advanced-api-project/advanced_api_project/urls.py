@@ -21,5 +21,5 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     # This captures anything starting with 'books/' and sends it to the api app
-    path("books/", include("api.urls")),
+    path("/", include("api.urls")),
 ]
