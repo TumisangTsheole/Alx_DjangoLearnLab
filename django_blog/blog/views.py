@@ -69,6 +69,17 @@ class PostListView(ListView):
             
         return queryset.order_by(self.ordering[0])
 
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/home.html'  # Reusing the home.html template
+    context_object_name = 'posts'
+    paginate_by = 5
+    ordering = ['-published_date']
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs.get('tag_slug')).order_by(self.ordering[0])
+
+
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'

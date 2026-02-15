@@ -17,7 +17,7 @@
             <p class="article-content">{{ object.content }}</p>
             <div>
                 {% for tag in object.tags.all %}
-                    <a class="badge badge-info" href="{% url 'search' %}?tag={{ tag.slug }}">{{ tag.name }}</a>
+                    <a class="badge badge-info" href="{% url 'posts_by_tag' tag.slug %}">{{ tag.name }}</a>
                 {% endfor %}
             </div>
         </div>
