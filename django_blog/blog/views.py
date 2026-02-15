@@ -55,7 +55,7 @@ class PostListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = Post.objects.all() # Explicitly use Post.objects.all()
         query = self.request.GET.get('q')
         tag = self.request.GET.get('tag')
 
