@@ -55,17 +55,19 @@ class PostListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = Post.objects.all() # Explicitly use Post.objects.all()
         query = self.request.GET.get('q')
         tag = self.request.GET.get('tag')
-
+        
         if query:
-            queryset = queryset.filter(
+            queryset = Post.objects.filter(
                 Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
             ).distinct()
-        if tag:
-            queryset = queryset.filter(tags__name__icontains=tag).distinct()
-        return queryset
+        elif tag:
+            queryset = Post.objects.filter(tags__name__icontains=tag).distinct()
+        else:
+            queryset = Post.objects.all()
+            
+        return queryset.order_by(self.ordering[0])
 
 class PostDetailView(DetailView):
     model = Post
