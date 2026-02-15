@@ -14,6 +14,7 @@ from .views import (
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
+    path('search/', PostListView.as_view(), name='search'), # Added search URL
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),

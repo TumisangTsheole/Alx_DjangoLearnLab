@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 
 class Post(models.Model):
@@ -12,6 +13,7 @@ class Post(models.Model):
         User,
         on_delete=models.CASCADE
     )
+    tags = TaggableManager() # Add this line
     def __str__(self):
         return self.title
 
