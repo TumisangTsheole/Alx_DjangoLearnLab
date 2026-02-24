@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer, UserSerializer
+from notifications.models import Notification
 
 User = get_user_model()
 
@@ -40,8 +41,6 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
-
-from notifications.models import Notification
 
 class FollowUserView(generics.GenericAPIView):
     queryset = User.objects.all()

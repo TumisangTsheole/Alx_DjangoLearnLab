@@ -1,6 +1,9 @@
-from rest_framework import viewsets, permissions, filters
-from .models import Post, Comment
+from rest_framework import viewsets, permissions, filters, generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer
+from notifications.models import Notification
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -33,13 +36,6 @@ class CommentViewSet(viewsets.ModelViewSet):
                 verb="commented on your post",
                 target=comment.post
             )
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import Post, Comment, Like
-from notifications.models import Notification
-from django.contrib.contenttypes.models import ContentType
-from rest_framework import generics
 
 class FeedView(APIView):
     permission_classes = [permissions.IsAuthenticated]
