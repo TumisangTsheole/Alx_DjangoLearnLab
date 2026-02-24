@@ -5,6 +5,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer, UserSerializer
 from notifications.models import Notification
+from .models import CustomUser
 
 User = get_user_model()
 
@@ -43,11 +44,11 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 class FollowUserView(generics.GenericAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
-        user_to_follow = User.objects.get(id=user_id)
+        user_to_follow = CustomUser.objects.get(id=user_id)
         if user_to_follow == request.user:
             return Response({"error": "You cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
         request.user.following.add(user_to_follow)
@@ -62,10 +63,10 @@ class FollowUserView(generics.GenericAPIView):
         return Response({"message": f"You are now following {user_to_follow.username}"}, status=status.HTTP_200_OK)
 
 class UnfollowUserView(generics.GenericAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
-        user_to_unfollow = User.objects.get(id=user_id)
+        user_to_unfollow = CustomUser.objects.get(id=user_id)
         request.user.following.remove(user_to_unfollow)
         return Response({"message": f"You have unfollowed {user_to_unfollow.username}"}, status=status.HTTP_200_OK)
