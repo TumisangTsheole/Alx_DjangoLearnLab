@@ -28,12 +28,30 @@ Authentication is handled via Token Authentication. Include `Authorization: Toke
 
 ## Features
 
-- **Posts & Comments:** Full CRUD for posts and comments.
-- **Filtering:** Search posts by title or content using `?search=query`.
-- **Following:** Follow and unfollow users.
-- **Feed:** View posts from followed users at `/api/feed/`.
-- **Likes:** Like and unlike posts.
-- **Notifications:** Receive notifications for likes, comments, and follows at `/api/notifications/`.
+### Authentication & Profiles
+- `POST /api/register/`: Register a new user.
+- `POST /api/login/`: Login and get a token.
+- `GET /api/profile/`: Get current user profile.
+- `PUT/PATCH /api/profile/`: Update current user profile.
+
+### Posts & Comments
+- `GET /api/posts/`: List all posts.
+- `POST /api/posts/`: Create a new post.
+- `GET /api/posts/<id>/`: Retrieve a post.
+- `PUT/PATCH /api/posts/<id>/`: Update a post (Author only).
+- `DELETE /api/posts/<id>/`: Delete a post (Author only).
+- `GET /api/comments/`: List all comments.
+- `POST /api/comments/`: Create a comment.
+
+### Following & Feed
+- `POST /api/follow/<user_id>/`: Follow a user.
+- `POST /api/unfollow/<user_id>/`: Unfollow a user.
+- `GET /api/feed/`: View posts from users you follow.
+
+### Likes & Notifications
+- `POST /api/posts/<pk>/like/`: Like a post.
+- `POST /api/posts/<pk>/unlike/`: Unlike a post.
+- `GET /api/notifications/`: View your notifications.
 
 ## Testing
 
