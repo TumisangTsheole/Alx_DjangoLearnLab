@@ -26,6 +26,24 @@ A robust social media API built with Django and Django REST Framework.
 
 Authentication is handled via Token Authentication. Include `Authorization: Token <your_token>` in the headers for protected endpoints.
 
+## Features
+
+- **Posts & Comments:** Full CRUD for posts and comments.
+- **Filtering:** Search posts by title or content using `?search=query`.
+- **Following:** Follow and unfollow users.
+- **Feed:** View posts from followed users at `/api/feed/`.
+- **Likes:** Like and unlike posts.
+- **Notifications:** Receive notifications for likes, comments, and follows at `/api/notifications/`.
+
+## Testing
+
+Testing was performed using Postman to verify:
+1. User registration and token generation.
+2. CRUD operations for posts and comments with author permissions.
+3. Follow/unfollow logic and feed aggregation.
+4. Like/unlike functionality and notification creation.
+5. Notification retrieval for the current user.
+
 ## User Model
 
 The custom user model `CustomUser` extends `AbstractUser` and includes:
